@@ -10,6 +10,7 @@ export default {
       },
     ],
   ],
+  publicPath: './',
   doc: {
     title: 'Taro Hooks',
     include: ['packages/hooks/src'],
