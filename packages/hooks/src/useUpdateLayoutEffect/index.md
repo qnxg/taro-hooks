@@ -1,14 +1,14 @@
 ---
-title: useUpdateEffect
+title: useUpdateLayoutEffect
 group:
   title: LifeCycle
   path: /lifeCycle
   order: 600
 ---
 
-# useUpdateEffect
+# useUpdateLayoutEffect
 
-一个只在依赖更新时执行的 useEffect hook。
+一个只在依赖更新时执行的 useLayoutEffect Hook。
 
 ## 代码演示
 
@@ -17,7 +17,7 @@ group:
 ``` jsx | pure
 import Taro, { useLayoutEffect, useState } from '@tarojs/taro';
 import { Button, View, Text } from '@tarojs/components';
-import { useUpdateEffect } from '@qnxg/hooks';
+import { useUpdateLayoutEffect } from '@qnxg/hooks';
 
 export default () => {
   const [count, setCount] = useState(0);
@@ -28,7 +28,7 @@ export default () => {
     setEffectCount(c => c + 1);
   }, [count]);
 
-  useUpdateEffect(() => {
+  useUpdateLayoutEffect(() => {
     setUpdateEffectCount(c => c + 1);
     return () => {
       // do something
@@ -52,7 +52,7 @@ export default () => {
 ## API
 
 ```javascript
-useUpdateEffect(
+useUpdateLayoutEffect(
   effect: () => (void | (() => void | undefined)),
   deps?: deps,
 )

@@ -1,3 +1,4 @@
 import useUpdateEffect from './useUpdateEffect';
+import useUpdateLayoutEffect from './useUpdateLayoutEffect';
 
-export { useUpdateEffect };
+export { useUpdateEffect, useUpdateLayoutEffect };
