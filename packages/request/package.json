@@ -25,11 +25,15 @@
   ],
   "author": "wangjq4214",
   "license": "MIT",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.com/"
+  },
   "bugs": {
     "url": "https://github.com/qnxg/taro-hooks/issues"
   },
   "homepage": "https://github.com/qnxg/taro-hooks#readme",
   "peerDependencies": {
     "@tarojs/taro": "^2.0.3"
-  }
+  },
+  "gitHead": "364c3a99be1dc7f61fc7204a2596ef3061325e66"
 }
