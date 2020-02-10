@@ -2,10 +2,18 @@
   "name": "@qnxg/hooks",
   "version": "0.0.1",
   "description": "针对Taro开发的自用Hooks",
-  "main": "index.js",
+  "main": "./lib/index.js",
+  "module": "./es/index.js",
+  "types": "./lib/index.d.ts",
   "scripts": {
-    "test": "test"
+    "compile": "tsc --declarationDir lib && tsc --declarationDir es"
   },
+  "files": [
+    "dist",
+    "lib",
+    "es",
+    "package.json"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/qnxg/taro-hooks.git"
@@ -20,5 +28,8 @@
   "bugs": {
     "url": "https://github.com/qnxg/taro-hooks/issues"
   },
-  "homepage": "https://github.com/qnxg/taro-hooks#readme"
+  "homepage": "https://github.com/qnxg/taro-hooks#readme",
+  "peerDependencies": {
+    "@tarojs/taro": "^2.0.3"
+  }
 }

@@ -11,6 +11,8 @@
     "dev": "father-doc dev",
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean --yes",
+    "compile": "lerna run --scope @qnxg/hooks compile",
+    "build": "node ./scripts/clean-old-build.js && father build && npm run compile && node ./scripts/build-wind-up.js",
     "test": "father test",
     "cov": "father test --coverage",
     "help": "father help",
@@ -19,6 +21,7 @@
   },
   "devDependencies": {
     "@tarojs/taro": "^2.0.3",
+    "del": "^5.1.0",
     "father": "^2.29.2",
     "father-doc": "^1.0.0-alpha.19",
     "lerna": "^3.20.2",
