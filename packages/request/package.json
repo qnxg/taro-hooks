@@ -1,0 +1,24 @@
+{
+  "name": "@qnxg/request",
+  "version": "0.0.1",
+  "description": "小程序版SWR",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qnxg/taro-hooks.git"
+  },
+  "keywords": [
+    "Taro",
+    "小程序",
+    "Request"
+  ],
+  "author": "wangjq4214",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/qnxg/taro-hooks/issues"
+  },
+  "homepage": "https://github.com/qnxg/taro-hooks#readme"
+}

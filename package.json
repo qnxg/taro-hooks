@@ -1,0 +1,27 @@
+{
+  "name": "taro-hooks",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qnxg/taro-hooks"
+  },
+  "scripts": {
+    "init": "rm -rf node_modules && npm install && npm run clean && npm run bootstrap",
+    "start": "npm run dev",
+    "dev": "father-doc dev",
+    "bootstrap": "lerna bootstrap",
+    "clean": "lerna clean --yes",
+    "test": "father test",
+    "cov": "father test --coverage",
+    "help": "father help",
+    "precommit": "father pre-commit",
+    "build:doc": "father-doc build"
+  },
+  "devDependencies": {
+    "@tarojs/taro": "^2.0.3",
+    "father": "^2.29.2",
+    "father-doc": "^1.0.0-alpha.19",
+    "lerna": "^3.20.2",
+    "typescript": "^3.7.5"
+  }
+}
