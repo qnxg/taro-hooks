@@ -12,10 +12,10 @@ export default {
   ],
   doc: {
     title: 'Taro Hooks',
-    include: [],
+    include: ['packages/hooks/src'],
     locales: [
-      ['en-US', 'English'],
       ['zh-CN', '中文'],
+      ['en-US', 'English'],
     ],
   },
   plugins: [

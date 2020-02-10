@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "@tarojs/taro": "^2.0.3",
+    "@types/jest": "^25.1.2",
     "del": "^5.1.0",
     "father": "^2.29.2",
     "father-doc": "^1.0.0-alpha.19",

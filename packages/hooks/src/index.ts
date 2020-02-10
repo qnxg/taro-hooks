@@ -1,1 +1,3 @@
-console.log('hello hooks');
+import useUpdateEffect from './useUpdateEffect';
+
+export { useUpdateEffect };
