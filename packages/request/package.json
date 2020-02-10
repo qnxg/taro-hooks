@@ -1,6 +1,6 @@
 {
   "name": "@qnxg/request",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "小程序版SWR",
   "main": "./lib/index.js",
   "module": "./es/index.js",
