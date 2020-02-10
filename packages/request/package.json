@@ -36,5 +36,5 @@
   "peerDependencies": {
     "@tarojs/taro": "^2.0.3"
   },
-  "gitHead": "828c6c79bfb75cbbea54ee035fdf677d25ec8abd"
+  "gitHead": "e5b5c12ffcefa15b7ac33ce0ce8370b139a5449a"
 }
