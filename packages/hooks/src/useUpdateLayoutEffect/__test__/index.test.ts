@@ -1,14 +1,14 @@
 import { renderHook } from '@testing-library/react-hooks';
-import useUpdateEffect from '../index';
+import useUpdateLayoutEffect from '../index';
 
-describe('useUpdateEffect', () => {
+describe('useUpdateLayoutEffect', () => {
   it('should be defined', () => {
-    expect(useUpdateEffect).toBeDefined();
+    expect(useUpdateLayoutEffect).toBeDefined();
   });
   it('test on mounted', async () => {
     let mountedState = 1;
     const hook = renderHook(() =>
-      useUpdateEffect(() => {
+      useUpdateLayoutEffect(() => {
         mountedState = 2;
       }),
     );
@@ -19,7 +19,7 @@ describe('useUpdateEffect', () => {
   it('test on optional', () => {
     let mountedState = 1;
     const hook = renderHook(() =>
-      useUpdateEffect(() => {
+      useUpdateLayoutEffect(() => {
         mountedState = 3;
       }, [mountedState]),
     );
