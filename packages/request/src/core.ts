@@ -87,13 +87,12 @@ class Core {
 
   // 执行请求前拦截器
   dealRequestInterceptors(ctx: Context) {
-    const reducer: any = (p1: any, p2: any) => {
+    const reducer: any = (p1: any, p2: any) =>
       p1.then((ret: any = {}) => {
         ctx.req.url = ret.url || ctx.req.url;
         ctx.req.options = ret.options || ctx.req.options;
         return p2(ctx.req.url, ctx.req.options);
       });
-    };
 
     const allInterceptors = [...Core.requestInterceptors, ...this.instanceRequestInterceptors];
 
