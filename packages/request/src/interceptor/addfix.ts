@@ -5,13 +5,13 @@ const addfix = (url: string, options: RequestOptionsInit = {}) => {
   let urlAddFix = url;
   const { prefix, suffix } = options;
   if (prefix) {
-    urlAddFix = `${prefix}${url}`;
+    urlAddFix = `${prefix}${urlAddFix}`;
   }
   if (suffix) {
-    urlAddFix = `${url}${suffix}`;
+    urlAddFix = `${urlAddFix}${suffix}`;
   }
 
-  return { urlAddFix, options };
+  return { url: urlAddFix, options };
 };
 
 export default addfix;

@@ -42,10 +42,11 @@ class CancelToken {
     }
   }
 
-  source(): { token: CancelToken; cancel: (message: string) => void } {
+  static source(): { token: CancelToken; cancel: (message: string) => void } {
+    const token = new CancelToken();
     return {
-      token: this,
-      cancel: this.cancel,
+      token,
+      cancel: token.cancel.bind(token),
     };
   }
 }
