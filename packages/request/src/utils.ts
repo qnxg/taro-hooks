@@ -145,7 +145,7 @@ export function forEach2ObjArr(target: any, callback: Function) {
   } else {
     for (const key in originTarget) {
       if (Object.prototype.hasOwnProperty.call(originTarget, key)) {
-        callback.call(null, originTarget, key, originTarget);
+        callback.call(null, originTarget[key], key, originTarget);
       }
     }
   }
