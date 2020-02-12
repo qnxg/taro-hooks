@@ -13,3 +13,4 @@ coverage
 page
 lerna-debug.log
 tsconfig.tsbuildinfo
+package-lock.json
