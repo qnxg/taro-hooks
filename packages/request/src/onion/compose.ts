@@ -16,7 +16,8 @@ export default function compose(middlewares: OnionMiddleware[]) {
     }
   }
 
-  return function wrapMiddlewares(params: Context, next: () => void) {
+  return function wrapMiddlewares(params: Context, next?: () => void) {
+    // 组合所有中间件
     let index = -1;
     function dispath(i: number): any {
       if (i <= index) {
