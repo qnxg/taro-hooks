@@ -11,7 +11,7 @@
     "dev": "father-doc dev",
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean --yes",
-    "compile": "lerna run --scope @qnxg/hooks compile",
+    "compile": "lerna run --scope @qnxg/hooks compile && lerna run --scope @qnxg/request compile",
     "build": "node ./scripts/clean-old-build.js && father build && npm run compile && node ./scripts/build-wind-up.js",
     "test": "father test",
     "cov": "father test --coverage",
