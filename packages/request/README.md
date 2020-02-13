@@ -3,7 +3,7 @@ title: request
 group:
   title: Request
   path: /request
-  order: 600
+  order: 1000
 ---
 
 ## @qnxg/request

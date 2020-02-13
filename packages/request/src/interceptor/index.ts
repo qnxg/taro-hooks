@@ -10,6 +10,6 @@ export type RequestInterceptor = (
 };
 
 export type ResponseInterceptor = (
-  response: Taro.request.SuccessCallbackResult,
+  response: Taro.request.Promised,
   options: RequestOptionsInit,
 ) => Response | Promise<Response>;

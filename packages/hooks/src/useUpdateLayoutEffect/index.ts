@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from '@tarojs/taro';
+import { useLayoutEffect, useRef } from 'react';
 
 const useUpdateLayoutEffect: typeof useLayoutEffect = (effect, deps) => {
   const isMounted = useRef(false);

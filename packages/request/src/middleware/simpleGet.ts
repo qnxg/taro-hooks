@@ -53,7 +53,7 @@ const simpleGetMiddleware: OnionMiddleware = (ctx, next) => {
   const { params } = options;
   const { req: { url = '' } = {} } = ctx;
 
-  options.method = options.method ? options.method.toUpperCase() : 'GET';
+  options.method = options.method ? (options.method.toUpperCase() as any) : 'GET';
 
   // 跨域cookie的指定
   options.credentials = options.credentials || 'same-origin';
