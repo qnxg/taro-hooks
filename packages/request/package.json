@@ -1,7 +1,7 @@
 {
   "name": "@qnxg/request",
-  "version": "0.0.7",
-  "description": "小程序版SWR",
+  "version": "0.0.9",
+  "description": "对小程序Request与Upload的统一封装，并支持洋葱圈中间件模型",
   "main": "./lib/index.js",
   "module": "./es/index.js",
   "types": "./lib/index.d.ts",
@@ -12,7 +12,8 @@
     "dist",
     "lib",
     "es",
-    "package.json"
+    "package.json",
+    "README.md"
   ],
   "repository": {
     "type": "git",
@@ -36,5 +37,11 @@
   "peerDependencies": {
     "@tarojs/taro": "^2.0.3"
   },
-  "gitHead": "1024f59f42f9cd920d386b0a4b0368dd9194923d"
+  "gitHead": "1024f59f42f9cd920d386b0a4b0368dd9194923d",
+  "dependencies": {
+    "qs": "^6.9.1"
+  },
+  "devDependencies": {
+    "@types/qs": "^6.9.1"
+  }
 }
