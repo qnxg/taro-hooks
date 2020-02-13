@@ -1,6 +1,6 @@
 {
   "name": "@qnxg/request",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "对小程序Request与Upload的统一封装，并支持洋葱圈中间件模型",
   "main": "./lib/index.js",
   "module": "./es/index.js",
