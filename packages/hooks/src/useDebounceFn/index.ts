@@ -1,4 +1,4 @@
-import { DependencyList, useRef, useCallback } from '@tarojs/taro';
+import { DependencyList, useRef, useCallback } from 'react';
 import useUpdateEffect from '../useUpdateEffect';
 
 type noop = (...args: any[]) => any;

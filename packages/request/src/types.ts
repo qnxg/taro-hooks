@@ -2,9 +2,8 @@ import Taro from '@tarojs/taro';
 import CancelToken from './cancel/cancelToken';
 import { ResponseError } from './utils';
 import { ResponseInterceptor } from './interceptor';
-import Cancel from './cancel/cancel';
 
-export type ResponseType = Taro.request.dataType & Taro.request.responseType;
+export type ResponseType = 'json' | 'text' | 'blob' | 'arrayBuffer' | 'formData';
 
 /**
  * 可以设置的参数
@@ -32,6 +31,7 @@ export type ResponseType = Taro.request.dataType & Taro.request.responseType;
  * @param {CancelToken} 取消请求的 Token, 因为小程序 API 会出现问题, 所以改为不返回任何数据
  */
 export interface RequestOptionsInit extends RequestInit {
+  method?: 'OPTIONS' | 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'TRACE' | 'CONNECT';
   params?: object;
   data?: any;
   timeout?: number;
@@ -72,5 +72,5 @@ export interface RequestOptionsWithoutResponse extends RequestOptionsInit {
 
 export type RequestResponse<T = any> = {
   data: T;
-  response: Taro.request.SuccessCallbackResult<T>;
+  response: Taro.request.Promised<T>;
 };

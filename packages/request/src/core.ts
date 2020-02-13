@@ -81,7 +81,7 @@ class Core {
   }
 
   extendOptions(options: RequestOptionsInit) {
-    this.initOptions = mergeRequestOptions(this.initOptions, options);
+    this.initOptions = mergeRequestOptions(this.initOptions, options) as any;
     // this.mapCache.extendOptions(options);
   }
 
