@@ -1,4 +1,4 @@
-import { DependencyList, useCallback, useEffect, useRef } from '@tarojs/taro';
+import { DependencyList, useCallback, useEffect, useRef } from 'react';
 import useUpdateEffect from '../useUpdateEffect';
 
 type noop = (...args: any[]) => any;
@@ -40,7 +40,8 @@ function useThrottleFn<T extends any[]>(
   const run = useCallback(
     (...args: any) => {
       currentArgs.current = args;
-      if (!timer.current) { // 如果不在计时中
+      if (!timer.current) {
+        // 如果不在计时中
         timer.current = setTimeout(() => {
           fnRef.current(...currentArgs.current);
           timer.current = undefined;

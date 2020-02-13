@@ -1,4 +1,4 @@
-import { useCallback, useState, useMemo } from '@tarojs/taro';
+import { useCallback, useState, useMemo } from 'react';
 
 type IState = string | number | boolean | undefined;
 
