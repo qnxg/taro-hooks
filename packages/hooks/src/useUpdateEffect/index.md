@@ -15,7 +15,7 @@ group:
 ### 基础使用
 
 ``` jsx | pure
-import Taro, { useLayoutEffect, useState } from '@tarojs/taro';
+import Taro, { useLayoutEffect, useState } from 'react';
 import { Button, View, Text } from '@tarojs/components';
 import { useUpdateEffect } from '@qnxg/hooks';
 

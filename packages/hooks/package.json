@@ -34,7 +34,8 @@
   },
   "homepage": "https://github.com/qnxg/taro-hooks#readme",
   "peerDependencies": {
-    "@tarojs/taro": "^2.0.3"
+    "@tarojs/taro": "^3.0.0-alpha.1",
+    "react": "^16.12.0"
   },
   "gitHead": "1024f59f42f9cd920d386b0a4b0368dd9194923d"
 }

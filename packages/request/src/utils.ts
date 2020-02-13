@@ -76,20 +76,20 @@ export class RequestError extends Error {
 export class ResponseError<T = any> extends Error {
   data: any;
 
-  response: Taro.request.SuccessCallbackResult;
+  response: Taro.request.Promised;
 
   request: Req;
 
   type: string;
 
   constructor(
-    response: Taro.request.SuccessCallbackResult<T>,
+    response: Taro.request.Promised<T>,
     text: string,
     data: T,
     request: Req,
     type = 'ResponseError',
   ) {
-    super(text || response.errMsg);
+    super(text);
     this.name = 'ResponseError';
     this.data = data;
     this.response = response;
@@ -197,7 +197,7 @@ export function getParamObject(val: any) {
 export function mergeRequestOptions(
   options: RequestOptionsInit,
   options2Merge: RequestOptionsInit,
-) {
+): RequestOptionsInit {
   return {
     ...options,
     ...options2Merge,

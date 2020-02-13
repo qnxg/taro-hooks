@@ -21,7 +21,7 @@
     "pub": "lerna publish"
   },
   "devDependencies": {
-    "@tarojs/taro": "^2.0.3",
+    "@tarojs/taro": "^3.0.0-alpha.1",
     "@testing-library/react-hooks": "^3.2.1",
     "@types/jest": "^25.1.2",
     "del": "^5.1.0",

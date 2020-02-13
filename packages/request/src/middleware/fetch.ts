@@ -77,7 +77,7 @@ const fetchMiddleware: OnionMiddleware = (ctx, next) => {
           url,
           data: options.data,
           header: options.headers,
-          method: (options.method as keyof request.method) || 'GET',
+          method: options.method || 'GET',
           credentials: options.credentials,
         }),
       ];
