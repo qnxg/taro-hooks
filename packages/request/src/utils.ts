@@ -209,6 +209,6 @@ export function mergeRequestOptions(
       ...getParamObject(options.params),
       ...getParamObject(options2Merge.params),
     },
-    method: (options2Merge.method || options.method || 'get').toLowerCase(),
+    method: (options2Merge.method || options.method || 'get').toLowerCase() as any,
   };
 }
