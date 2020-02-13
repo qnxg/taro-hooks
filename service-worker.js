@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "./precache-manifest.be7d42e91ba8f725fc516ead0cca7728.js"
+  "./precache-manifest.e91f2ccf48c8df78e30d84266d065625.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "taro-hooks"});
