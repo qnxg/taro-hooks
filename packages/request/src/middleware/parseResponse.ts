@@ -1,9 +1,9 @@
 import { ResponseError, RequestError } from '../utils';
 import { OnionMiddleware } from '../onion';
 
-const parseResponseMiddleware: OnionMiddleware = (ctx, next) => {
+const parseResponseMiddleware: OnionMiddleware = async (ctx, next) => {
   // 后置中间件
-  next();
+  await next();
 
   try {
     if (!ctx) return;
@@ -13,8 +13,10 @@ const parseResponseMiddleware: OnionMiddleware = (ctx, next) => {
     if (res.statusCode >= 200 && res.statusCode < 300) {
       if (getResponse) {
         ctx.res = { data: res.data, response: res };
+        return;
       }
       ctx.res = res.data;
+      return;
     }
 
     throw new ResponseError(res, 'http error', res.data, req, 'HttpError');

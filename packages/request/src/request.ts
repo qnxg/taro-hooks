@@ -9,8 +9,6 @@ import {
   RequestOptionsWithResponse,
   RequestResponse,
   RequestOptionsWithoutResponse,
-  CancelStatic,
-  CancelTokenStatic,
 } from './types';
 import { RequestInterceptor, ResponseInterceptor } from './interceptor/index';
 
@@ -30,16 +28,17 @@ export interface RequestMethod<R = false> {
   rpc: RequestMethod<R>;
   interceptors: {
     request: {
-      use: (handler: RequestInterceptor, options?: OnionOptions) => void;
+      coreUse: (handler: RequestInterceptor) => void;
+      use: (handler: RequestInterceptor) => void;
     };
     response: {
-      use: (handler: ResponseInterceptor, options?: OnionOptions) => void;
+      coreUse: (handler: ResponseInterceptor) => void;
+      use: (handler: ResponseInterceptor) => void;
     };
   };
   use: (handler: OnionMiddleware, options?: OnionOptions) => void;
-  fetchIndex: number;
-  Cancel: CancelStatic;
-  CancelToken: CancelTokenStatic;
+  Cancel: typeof Cancel;
+  CancelToken: typeof CancelToken;
   isCancel(value: any): boolean;
   extendOptions: (options: RequestOptionsInit) => void;
   middlewares: {
@@ -53,7 +52,7 @@ export interface RequestMethod<R = false> {
 // 通过 request 函数，在 core 之上再封装一层，提供 api
 const request = <T = any>(initOptions: RequestOptionsInit = {}): RequestMethod<T> => {
   const coreInstance = new Core(initOptions);
-  const qnxgInstance: any = (url: string, options: RequestOptionsInit = {}): Promise<T> => {
+  const qnxgInstance: any = (url: string, options: RequestOptionsInit = {}) => {
     const mergeOptions = mergeRequestOptions(coreInstance.initOptions, options);
     return coreInstance.request<T>(url, mergeOptions);
   };
@@ -64,10 +63,12 @@ const request = <T = any>(initOptions: RequestOptionsInit = {}): RequestMethod<T
   // 拦截器
   qnxgInstance.interceptors = {
     request: {
-      use: Core.requestUse.bind(coreInstance),
+      coreUse: Core.requestUse.bind(coreInstance),
+      use: coreInstance.requestUse.bind(coreInstance),
     },
     response: {
-      use: Core.responseUse.bind(coreInstance),
+      coreUse: Core.responseUse.bind(coreInstance),
+      use: coreInstance.responsetUse.bind(coreInstance),
     },
   };
 

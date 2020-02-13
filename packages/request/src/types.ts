@@ -74,21 +74,3 @@ export type RequestResponse<T = any> = {
   data: T;
   response: Taro.request.SuccessCallbackResult<T>;
 };
-
-export interface CancelStatic {
-  new (message?: string): Cancel;
-}
-
-export interface Canceler {
-  (message?: string): void;
-}
-
-export interface CancelTokenSource {
-  token: CancelToken;
-  cancel: Canceler;
-}
-
-export interface CancelTokenStatic {
-  new (executor: (cancel: Canceler) => void): CancelToken;
-  source(): CancelTokenSource;
-}

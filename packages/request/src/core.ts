@@ -1,4 +1,4 @@
-import Onion, { OnionMiddleware } from './onion';
+import Onion, { OnionMiddleware, OnionOptions } from './onion';
 import simplePost from './middleware/simplePost';
 import simpleGet from './middleware/simpleGet';
 import parseResponse from './middleware/parseResponse';
@@ -41,7 +41,7 @@ class Core {
     this.instanceResponseInterceptors = [];
   }
 
-  // 请求拦截器 默认 { global: true } 兼容旧版本拦截器
+  // 请求拦截器
   static requestUse(handler: RequestInterceptor) {
     if (typeof handler !== 'function') {
       throw new TypeError('Interceptor must be function!');
@@ -49,7 +49,7 @@ class Core {
     Core.requestInterceptors.push(handler);
   }
 
-  // 响应拦截器 默认 { global: true } 兼容旧版本拦截器
+  // 响应拦截器
   static responseUse(handler: ResponseInterceptor) {
     if (typeof handler !== 'function') {
       throw new TypeError('Interceptor must be function!');
@@ -75,7 +75,7 @@ class Core {
     this.instanceResponseInterceptors.push(handler);
   }
 
-  use(newMiddleware: OnionMiddleware, opt = { global: false, core: false }) {
+  use(newMiddleware: OnionMiddleware, opt: OnionOptions = { global: false, core: false }) {
     this.onion.use(newMiddleware, opt);
     return this;
   }
