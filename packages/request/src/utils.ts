@@ -3,56 +3,57 @@ import { stringify } from 'qs';
 import { Req, RequestOptionsInit } from './types';
 import Cancel from './cancel/cancel';
 
-// export class MapCache {
-//   keyMap: any;
+export class MapCache {
+  cache: Map<string, any>;
 
-//   cache: Array<any>;
+  timer: any;
 
-//   timer: Array<any>;
+  maxCache: number = 0;
 
-//   maxCache: number = 0;
+  constructor(options: RequestOptionsInit) {
+    this.cache = new Map();
+    this.timer = {};
+    this.extendOptions(options);
+  }
 
-//   constructor(options: RequestOptionsInit) {
-//     this.keyMap = {};
-//     this.cache = [];
-//     this.timer = [];
-//     this.extendOptions(options);
-//   }
+  extendOptions(options: RequestOptionsInit) {
+    this.maxCache = options.maxCache || 0;
+  }
 
-//   extendOptions(options: RequestOptionsInit) {
-//     this.maxCache = options.maxCache ? options.maxCache : 0;
-//   }
+  get(key: any) {
+    return this.cache.get(JSON.stringify(key));
+  }
 
-//   get(key: any) {
-//     return this.cache[this.keyMap[JSON.stringify(key)]];
-//   }
+  set(key: any, value: any, ttl = 60000) {
+    // 如果超过最大缓存数, 删除头部的第一个缓存.
+    if (this.maxCache > 0 && this.cache.size >= this.maxCache) {
+      const deleteKey = [...this.cache.keys()][0];
+      this.cache.delete(deleteKey);
+      if (this.timer[deleteKey]) {
+        clearTimeout(this.timer[deleteKey]);
+      }
+    }
+    const cacheKey = JSON.stringify(key);
+    this.cache.set(cacheKey, value);
+    if (ttl > 0) {
+      this.timer[cacheKey] = setTimeout(() => {
+        this.cache.delete(cacheKey);
+        delete this.timer[cacheKey];
+      }, ttl);
+    }
+  }
 
-//   set(key: any, value: any, ttl = 60000) {
-//     const cacheKey = JSON.stringify(key);
-//     this.keyMap[cacheKey] = this.cache.length;
-//     this.cache.push(value);
-//     if (ttl > 0) {
-//       this.timer.push(
-//         setTimeout(() => {
-//           this.cache.delete(cacheKey);
-//           delete this.timer[cacheKey];
-//         }, ttl),
-//       );
-//     }
-//   }
+  delete(key: any) {
+    const cacheKey = JSON.stringify(key);
+    delete this.timer[cacheKey];
+    return this.cache.delete(cacheKey);
+  }
 
-//   delete(key: any) {
-//     const cacheKey = JSON.stringify(key);
-//     delete this.timer[cacheKey];
-//     delete this.cache[cacheKey];
-//   }
-
-//   clear() {
-//     this.timer = [];
-//     this.cache = [];
-//     this.keyMap = {};
-//   }
-// }
+  clear() {
+    this.timer = {};
+    return this.cache.clear();
+  }
+}
 
 /**
  * 请求错误
