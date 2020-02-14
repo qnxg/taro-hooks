@@ -1,4 +1,4 @@
-import { useState } from '@tarojs/taro';
+import { useState } from 'react';
 import useThrottleFn from '../useThrottleFn';
 
 function useThrottle<T>(value: T, wait: number) {
