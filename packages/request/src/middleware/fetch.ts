@@ -30,7 +30,7 @@ const fetchMiddleware: OnionMiddleware = (ctx, next) => {
     ttl = 0,
   } = options;
 
-  // 供调试使用, 不发送具体请求
+  // 供调试使用, 不发送具体请求, 或者调整 core 中间件
   if (__qnxgRequestCoreType__ !== 'normal') {
     if (warnedCoreType === false) {
       warnedCoreType = true;
