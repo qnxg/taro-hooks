@@ -8,7 +8,7 @@ const options: IBundleOptions = {
     eslint: true,
     prettier: true,
   },
-  pkgs: ['request', 'hooks'],
+  pkgs: ['request', 'hooks', 'use-request'],
 };
 
 export default options;
