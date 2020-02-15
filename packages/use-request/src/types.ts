@@ -1,5 +1,8 @@
-import { DependencyList } from 'react';
+import { DependencyList, RefObject } from 'react';
 
+/**
+ * useAsync Types
+ */
 export type noop = (...args: any[]) => void;
 
 export type Service<R, P extends any[]> = (...args: P) => Promise<R>;
@@ -83,3 +86,40 @@ export type OptionsWithFormat<R, P extends any[], U, UU extends U> = {
 export type Options<R, P extends any[], U, UU extends U> =
   | BaseOptions<R, P>
   | OptionsWithFormat<R, P, U, UU>;
+
+/**
+ * useLoadMore Types
+ */
+
+export type LoadMoreParams<R> = [R | undefined, ...any[]];
+
+export interface LoadMoreFormatReturn {
+  list: any[];
+  [key: string]: any;
+}
+
+export interface LoadMoreResult<R> extends BaseResult<R, LoadMoreParams<R>> {
+  noMore?: boolean;
+  loadMore: () => void;
+  reload: () => void;
+  loadingMore: boolean;
+}
+
+export interface LoadMoreOptions<R extends LoadMoreFormatReturn>
+  extends Omit<BaseOptions<R, LoadMoreParams<R>>, 'loadMore'> {
+  loadMore: true;
+  fetchKey: (...args: LoadMoreParams<R>) => string;
+  ref?: RefObject<any>;
+  isNoMore?: (r: R | undefined) => boolean;
+  threshold?: number;
+}
+
+export interface LoadMoreOptionsWithFormat<R extends LoadMoreFormatReturn, RR>
+  extends Omit<BaseOptions<R, LoadMoreParams<R>>, 'loadMore'> {
+  loadMore: true;
+  fetchKey: (...args: LoadMoreParams<R>) => string;
+  formatResult: (data: RR) => R;
+  ref?: RefObject<any>;
+  isNoMore?: (r: R | undefined) => boolean;
+  threshold?: number;
+}

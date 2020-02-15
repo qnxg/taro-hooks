@@ -1,7 +1,8 @@
 import debounce from 'lodash.debounce';
 import throttle from 'lodash.throttle';
-import { useRef, useState } from 'react';
+import { useRef, useState, useCallback, useEffect } from 'react';
 import usePersistFn from './utils/usePersistFn';
+import useUpdateEffect from './utils/useUpdateEffect';
 import { getCache, setCache } from './utils/cahce';
 import {
   FetchConfig,
@@ -287,6 +288,7 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
     throttleInterval,
   };
 
+  // 设置更新 Fetch 的函数
   const subscribe = usePersistFn((key: string, data: any) => {
     setFeches((s: any) => {
       // eslint-disable-next-line no-param-reassign
@@ -295,13 +297,18 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
     });
   }, []) as any;
 
+  // 设置请求 fetch
   const [fetches, setFeches] = useState<Fetches<U, P>>(() => {
+    // 判断是否存在缓存
     if (cacheKey) {
       const cache = getCache(cacheKey);
+      // 获取缓存成功
       if (cache) {
+        // 指定 fetchKey
         newstFetchKey.current = cache.newstFetchKey;
         const newFetches: any = {};
         Object.keys(cache.fetches).forEach(key => {
+          // 使用缓存中的信息新建新的 Fetch
           const cacheFetch = cache.fetches[key];
           const newFetch = new Fetch(servicePersist, config, subscribe.bind(null, key), {
             loading: cacheFetch.loading,
@@ -314,116 +321,114 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
         return newFetches;
       }
     }
+    // 不存在直接返回空
     return [];
   });
   const fetchesRef = useRef(fetches);
   fetchesRef.current = fetches;
+
+  // 执行请求的函数
+  const run = useCallback(
+    (...args: P) => {
+      // 存在 fetchKey 参数通过该参数设置
+      if (fetchKeyPersist) {
+        const key = fetchKeyPersist(...args);
+        newstFetchKey.current = key === undefined ? DEFAULT_KEY : key;
+      }
+      const currentFetchKey = newstFetchKey.current;
+      // 这里必须用 fetchsRef，而不能用 fetches
+      // 否则在 reset 完，立即 run 的时候，这里拿到的 fetches 是旧的
+      let currentFetch = fetchesRef.current[currentFetchKey];
+      if (!currentFetch) {
+        const newFetch = new Fetch(servicePersist, config, subscribe.bind(null, currentFetchKey), {
+          data: initialData,
+        });
+        currentFetch = newFetch.state;
+        setFeches(s => {
+          // eslint-disable-next-line no-param-reassign
+          s[currentFetchKey] = currentFetch;
+          return { ...s };
+        });
+      }
+      return currentFetch.run(...args);
+    },
+    [fetchKey, subscribe],
+  );
+
+  // cache
+  useEffect(() => {
+    if (cacheKey) {
+      setCache(cacheKey, {
+        fetches,
+        newstFetchKey: newstFetchKey.current,
+      });
+    }
+  }, [cacheKey, fetches]);
+
+  // 第一次默认执行
+  useEffect(() => {
+    if (!manual) {
+      if (Object.keys(fetches).length > 0) {
+        Object.values(fetches).forEach(f => {
+          f.refresh();
+        });
+      }
+    } else {
+      run(...(defaultParams as any));
+    }
+  }, []);
+
+  // 重置 fetches
+  const reset = useCallback(() => {
+    Object.values(fetchesRef.current).forEach(f => {
+      f.unmount();
+    });
+    newstFetchKey.current = DEFAULT_KEY;
+    setFeches({});
+    fetchesRef.current = {};
+  }, [setFeches]);
+
+  //  refreshDeps 变化，重新执行所有请求
+  useUpdateEffect(() => {
+    if (!manual) {
+      /* 全部重新执行 */
+      Object.values(fetchesRef.current).forEach(f => {
+        f.refresh();
+      });
+    }
+  }, [...refreshDeps]);
+
+  // 卸载组件触发
+  useEffect(
+    () => () => {
+      Object.values(fetchesRef.current).forEach(f => {
+        f.unmount();
+      });
+    },
+    [],
+  );
+
+  const noReady = useCallback(
+    (name: string) => () => {
+      throw new Error(`Cannot call ${name} when service not executed once.`);
+    },
+    [],
+  );
+
+  return {
+    loading: !manual,
+    data: initialData,
+    error: undefined,
+    params: [],
+    cancel: noReady('cancel'),
+    refresh: noReady('refresh'),
+    mutate: noReady('mutate'),
+
+    ...(fetches[newstFetchKey.current] || {}),
+    run,
+    fetches,
+    reset,
+  } as BaseResult<U, P>;
 }
 
-//   const run = useCallback(
-//     (...args: P) => {
-//       if (fetchKeyPersist) {
-//         const key = fetchKeyPersist(...args);
-//         newstFetchKey.current = key === undefined ? DEFAULT_KEY : key;
-//       }
-//       const currentFetchKey = newstFetchKey.current;
-//       // 这里必须用 fetchsRef，而不能用 fetches。
-//       // 否则在 reset 完，立即 run 的时候，这里拿到的 fetches 是旧的。
-//       let currentFetch = fetchesRef.current[currentFetchKey];
-//       if (!currentFetch) {
-//         const newFetch = new Fetch(servicePersist, config, subscribe.bind(null, currentFetchKey), {
-//           data: initialData,
-//         });
-//         currentFetch = newFetch.state;
-//         setFeches(s => {
-//           // eslint-disable-next-line no-param-reassign
-//           s[currentFetchKey] = currentFetch;
-//           return { ...s };
-//         });
-//       }
-//       return currentFetch.run(...args);
-//     },
-//     [fetchKey, subscribe],
-//   );
-
-//   // cache
-//   useEffect(() => {
-//     if (cacheKey) {
-//       setCache(cacheKey, {
-//         fetches,
-//         newstFetchKey: newstFetchKey.current,
-//       });
-//     }
-//   }, [cacheKey, fetches]);
-
-//   // 第一次默认执行
-//   useEffect(() => {
-//     if (!manual) {
-//       // 如果有缓存
-//       if (Object.keys(fetches).length > 0) {
-//         /* 重新执行所有的 */
-//         Object.values(fetches).forEach(f => {
-//           f.refresh();
-//         });
-//       } else {
-//         // 第一次默认执行，可以通过 defaultParams 设置参数
-//         run(...(defaultParams as any));
-//       }
-//     }
-//   }, []);
-
-//   // 重置 fetches
-//   const reset = useCallback(() => {
-//     Object.values(fetchesRef.current).forEach(f => {
-//       f.unmount();
-//     });
-//     newstFetchKey.current = DEFAULT_KEY;
-//     setFeches({});
-//     // 不写会有问题。如果不写，此时立即 run，会是老的数据
-//     fetchesRef.current = {};
-//   }, [setFeches]);
-
-//   //  refreshDeps 变化，重新执行所有请求
-//   useUpdateEffect(() => {
-//     if (!manual) {
-//       /* 全部重新执行 */
-//       Object.values(fetchesRef.current).forEach(f => {
-//         f.refresh();
-//       });
-//     }
-//   }, [...refreshDeps]);
-
-//   // 卸载组件触发
-//   useEffect(
-//     () => () => {
-//       Object.values(fetchesRef.current).forEach(f => {
-//         f.unmount();
-//       });
-//     },
-//     [],
-//   );
-
-//   const noReady = useCallback(
-//     (name: string) => () => {
-//       throw new Error(`Cannot call ${name} when service not executed once.`);
-//     },
-//     [],
-//   );
-
-//   return {
-//     loading: !manual,
-//     data: initialData,
-//     error: undefined,
-//     params: [],
-//     cancel: noReady('cancel'),
-//     refresh: noReady('refresh'),
-//     mutate: noReady('mutate'),
-
-//     ...(fetches[newstFetchKey.current] || {}),
-//     run,
-//     fetches,
-//     reset,
-//   } as BaseResult<U, P>;
-// }
-
-// export default useAsync;
+export default useAsync;
