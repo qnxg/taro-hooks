@@ -8,6 +8,11 @@ function isFunction<T>(obj: any): obj is T {
   return typeof obj === 'function';
 }
 
+function useStorageState<T>(
+  key: T,
+  defaultValue: T | (() => T)
+): [T, (value?: T | ((previousState?: T) => T)) => void];
+
 function useStorageState<T>(key: string, defaultValue?: T | IFuncUpdater<T>) {
   const [state, setState] = useState<T | undefined>(() => getStoredValue());
 
