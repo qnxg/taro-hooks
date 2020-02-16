@@ -18,8 +18,7 @@
     "help": "father help",
     "precommit": "father pre-commit",
     "build:doc": "father-doc build",
-    "pub": "lerna publish",
-    "repub": "lerna publish from-package"
+    "pub": "lerna publish"
   },
   "devDependencies": {
     "@tarojs/taro": "^3.0.0-alpha.1",
