@@ -1,0 +1,39 @@
+{
+  "name": "@qnxg/use-request",
+  "version": "0.0.12",
+  "description": "小程序用request-hooks",
+  "main": "./lib/index.js",
+  "module": "./es/index.js",
+  "types": "./lib/index.d.ts",
+  "scripts": {
+    "compile": "tsc --declarationDir lib && tsc --declarationDir es"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qnxg/taro-hooks.git"
+  },
+  "keywords": [
+    "小程序",
+    "Taro",
+    "hooks"
+  ],
+  "author": "wangjq4214",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/qnxg/taro-hooks/issues"
+  },
+  "peerDependencies": {
+    "react": "^16.8.6",
+    "@tarojs/taro": "^3.0.0-alpha.1"
+  },
+  "dependencies": {
+    "@qnxg/request": "^0.0.12",
+    "lodash.debounce": "^4.0.8",
+    "lodash.throttle": "^4.1.1"
+  },
+  "devDependencies": {
+    "@types/lodash.debounce": "^4.0.6",
+    "@types/lodash.throttle": "^4.1.6"
+  },
+  "homepage": "https://github.com/qnxg/taro-hooks#readme"
+}

@@ -17,22 +17,25 @@ const fetchMiddleware: OnionMiddleware = (ctx, next) => {
     return;
   }
 
-  const { req: { options = {}, url = '' } = {}, responseInterceptors } = ctx;
+  const { req: { options = {}, url = '' } = {}, responseInterceptors, cache } = ctx;
   const {
     timeout = 0,
     requestType = 'json',
     formKey = 'file',
-    __umiRequestCoreType__ = 'normal',
+    __qnxgRequestCoreType__ = 'normal',
     useCache = false,
     validateCache = __defaultValidateCache,
+    params,
+    method,
+    ttl = 0,
   } = options;
 
-  // 供调试使用, 不发送具体请求
-  if (__umiRequestCoreType__ !== 'normal') {
+  // 供调试使用, 不发送具体请求, 或者调整 core 中间件
+  if (__qnxgRequestCoreType__ !== 'normal') {
     if (warnedCoreType === false) {
       warnedCoreType = true;
       console.warn(
-        '__umiRequestCoreType__ is a internal property that use in umi-request, change its value would affect the behavior of request! It only use when you want to extend or use request core.',
+        '__qnxgRequestCoreType__ is a internal property that use in qnxg-request, change its value would affect the behavior of request! It only use when you want to extend or use request core.',
       );
     }
     return next();
@@ -45,18 +48,15 @@ const fetchMiddleware: OnionMiddleware = (ctx, next) => {
   // 从缓存池检查是否有缓存数据
   const needCache = validateCache(url, options) && useCache;
   if (needCache) {
-    // let responseCache = cache.get({
-    //   url,
-    //   params,
-    //   method,
-    // });
-    // if (responseCache) {
-    //   responseCache = responseCache.clone();
-    //   responseCache.useCache = true;
-    //   ctx.res = responseCache;
-    //   return next();
-    // }
-    console.warn('Cache is on the way');
+    const responseCache = cache.get({
+      url,
+      params,
+      method,
+    });
+    if (responseCache) {
+      ctx.res = responseCache;
+      return next();
+    }
   }
 
   let response: any;
@@ -105,13 +105,13 @@ const fetchMiddleware: OnionMiddleware = (ctx, next) => {
 
   return response.then((res: any) => {
     // 是否存入缓存池
-    // if (needCache) {
-    //   if (res.status === 200) {
-    //     const copy = res.clone();
-    //     copy.useCache = true;
-    //     cache.set({ url, params, method }, copy, ttl);
-    //   }
-    // }
+    if (needCache) {
+      if (res.statusCode === 200) {
+        const copy = JSON.parse(JSON.stringify(res));
+        copy.useCache = true;
+        cache.set({ url, params, method }, copy, ttl);
+      }
+    }
 
     ctx.res = res;
     return next();

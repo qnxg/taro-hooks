@@ -1,6 +1,6 @@
 import Taro from '@tarojs/taro';
 import CancelToken from './cancel/cancelToken';
-import { ResponseError } from './utils';
+import { ResponseError, MapCache } from './utils';
 import { ResponseInterceptor } from './interceptor';
 
 export type ResponseType = 'json' | 'text' | 'blob' | 'arrayBuffer' | 'formData';
@@ -47,7 +47,7 @@ export interface RequestOptionsInit extends RequestInit {
   getResponse?: boolean;
   errorHandler?: (error: ResponseError) => void;
   cancelToken?: CancelToken;
-  __umiRequestCoreType__?: string;
+  __qnxgRequestCoreType__?: string;
 }
 
 export interface Req {
@@ -60,6 +60,7 @@ export interface Context {
   req: Req;
   res: any;
   responseInterceptors: ResponseInterceptor[];
+  cache: MapCache;
 }
 
 export interface RequestOptionsWithResponse extends RequestOptionsInit {

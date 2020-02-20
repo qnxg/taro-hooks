@@ -10,7 +10,7 @@ group:
 
 网络请求库，基于 `@tarojs/taro` 进行封装，api 的封装上，具有 fetch 的与 axios 的特点。为大家提供一个在小程序中统一的 api 调用方式，简化使用；并且提供缓存（待做）、超时（因小程序 api 经常出现问题，所以自己实现了一个方法）、错误处理等常用功能。
 
-![Deploy Doc Site](https://github.com/qnxg/taro-hooks/workflows/Deploy%20Doc%20Site/badge.svg)![Node.js CI](https://github.com/qnxg/taro-hooks/workflows/Node.js%20CI/badge.svg)[![npm version](https://badge.fury.io/js/%40qnxg%2Frequest.svg)](https://badge.fury.io/js/%40qnxg%2Frequest)
+![Deploy Doc Site](https://github.com/qnxg/taro-hooks/workflows/Deploy%20Doc%20Site/badge.svg)  ![Node.js CI](https://github.com/qnxg/taro-hooks/workflows/Node.js%20CI/badge.svg)  [![npm version](https://badge.fury.io/js/%40qnxg%2Frequest.svg)](https://badge.fury.io/js/%40qnxg%2Frequest)
 
 ---
 
@@ -29,9 +29,9 @@ group:
 ### TODO 欢迎 PR
 
 - api 请求缓存支持
-- api 支持GBK编码
+- api 支持 GBK 编码
 - 完善测试文件
-- 编写demo项目
+- 编写 demo 项目
 
 ### 安装
 
@@ -44,6 +44,35 @@ $ yarn add @qnxg/request
 ```
 
 ### 快速上手
+
+#### 执行 GET 请求
+
+``` js
+import request from '@qnxg/request';
+
+request
+  .get('/api/v1/xxx?id=1')
+  .then(function(response) {
+    console.log(response);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
+
+// 将请求参数放在 params 选项中
+request
+  .get('/api/v1/xxx', {
+    params: {id: 1},
+  })
+  .then(function(response) {
+    console.log(response);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
+```
+
+
 
 ### request APIs
 

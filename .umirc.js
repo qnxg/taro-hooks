@@ -14,7 +14,7 @@ export default {
   publicPath: './',
   doc: {
     title: 'Taro Hooks',
-    include: ['packages/hooks/src', 'packages/request'],
+    include: ['packages/hooks/src', 'packages/request', 'packages/use-request'],
     locales: [
       ['zh-CN', '中文'],
       ['en-US', 'English'],
