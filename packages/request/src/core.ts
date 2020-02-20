@@ -4,7 +4,7 @@ import simpleGet from './middleware/simpleGet';
 import parseResponse from './middleware/parseResponse';
 import fetchMiddleware from './middleware/fetch';
 import addfixInterceptor from './interceptor/addfix';
-import { mergeRequestOptions } from './utils';
+import { mergeRequestOptions, MapCache } from './utils';
 import { RequestOptionsInit, Context } from './types';
 import { RequestInterceptor, ResponseInterceptor } from './interceptor';
 
@@ -25,7 +25,7 @@ class Core {
 
   onion: Onion;
 
-  // mapCache = new MapCache(initOptions);
+  mapCache: MapCache;
 
   initOptions: RequestOptionsInit;
 
@@ -35,7 +35,7 @@ class Core {
 
   constructor(initOptions: RequestOptionsInit) {
     this.onion = new Onion([]);
-    // this.mapCache = new MapCache(initOptions);
+    this.mapCache = new MapCache(initOptions);
     this.initOptions = initOptions;
     this.instanceRequestInterceptors = [];
     this.instanceResponseInterceptors = [];
@@ -108,7 +108,7 @@ class Core {
     const obj: Context = {
       req: { url, options },
       res: null,
-      // cache: this.mapCache,
+      cache: this.mapCache,
       responseInterceptors: [...Core.responseInterceptors, ...this.instanceResponseInterceptors],
     };
     if (typeof url !== 'string') {
