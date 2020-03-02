@@ -8,7 +8,7 @@
   "scripts": {
     "init": "rm -rf node_modules && npm install && npm run clean && npm run bootstrap",
     "start": "npm run dev",
-    "dev": "father-doc dev",
+    "dev": "dumi dev",
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean --yes",
     "compile": "lerna run --scope @qnxg/hooks compile && lerna run --scope @qnxg/request compile && lerna run --scope @qnxg/use-request compile",
@@ -17,7 +17,7 @@
     "cov": "father test --coverage",
     "help": "father help",
     "precommit": "father pre-commit",
-    "build:doc": "father-doc build",
+    "build:doc": "dumi build",
     "pub": "lerna publish"
   },
   "devDependencies": {
@@ -27,8 +27,8 @@
     "@types/lodash.debounce": "^4.0.6",
     "@types/lodash.throttle": "^4.1.6",
     "del": "^5.1.0",
+    "dumi": "^1.0.0",
     "father": "^2.29.2",
-    "father-doc": "^1.0.0-alpha.19",
     "lerna": "^3.20.2",
     "typescript": "^3.7.5"
   }

@@ -1,6 +1,9 @@
 export default {
-  history: 'hash',
+  history: {
+    type: 'hash',
+  },
   hash: true,
+  mode: 'site',
   extraBabelPlugins: [
     [
       'babel-plugin-import',
@@ -12,20 +15,4 @@ export default {
     ],
   ],
   publicPath: './',
-  doc: {
-    title: 'Taro Hooks',
-    include: ['packages/hooks/src', 'packages/request', 'packages/use-request'],
-    locales: [
-      ['zh-CN', '中文'],
-      ['en-US', 'English'],
-    ],
-  },
-  plugins: [
-    [
-      'umi-plugin-react',
-      {
-        pwa: true,
-      },
-    ],
-  ],
 };
